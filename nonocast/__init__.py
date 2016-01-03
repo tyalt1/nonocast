@@ -13,23 +13,3 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
-
-setup(
-    name='Nonocast',
-    version='0.0.0',
-    description='',
-    author='',
-    packages=['nonocast'],
-    install_requires=['livestreamer'],
-    license='Apache',
-    classifiers=[
-        "Development Status :: 1 - Planning",
-        "License :: OSI Approved :: Apache Software License"
-        
-    ],
-)
