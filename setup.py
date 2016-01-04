@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # Copyright 2016 Tyler Alterio
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,17 +17,27 @@ try:
 except ImportError:
     from distutils.core import setup
 
+with open("README.md") as f:
+    readme = f.read();
+
 setup(
     name='Nonocast',
     version='0.0.0',
-    description='',
-    author='',
+    description='Web server for universal media casting.',
+    long_description=readme,
+    author='Tyler Alterio',
     packages=['nonocast'],
     install_requires=['livestreamer'],
-    license='Apache',
+    license='Apache 2.0',
     classifiers=[
         "Development Status :: 1 - Planning",
-        "License :: OSI Approved :: Apache Software License"
-        
+        "Environment :: Web Environment",
+        "License :: OSI Approved :: Apache Software License",
+        "Operating System :: POSIX",
+        "Programming Language :: Python",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Multimedia :: Sound/Audio",
+        "Topic :: Multimedia :: Video",
+        "Topic :: Utilities"
     ],
 )
