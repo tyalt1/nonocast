@@ -1,6 +1,11 @@
-import os, sys
-from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
-import re, urllib2
+from __future__ import print_function
+from sys import version_info
+import re, urllib3
+
+if version_info[0] == 2:
+    from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
+else:
+    from http.server import HTTPServer, BaseHTTPRequestHandler
 
 page = '''
 <html>
@@ -43,7 +48,8 @@ def run(handler):
     )
     while 1:
         server.handle_request()
- 
+
 def handle_url(url):
-    print url
+    print(url)
+
 run(handle_url)
