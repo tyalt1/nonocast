@@ -27,15 +27,67 @@ page = '''
 <html>
     <head>
         <style type="text/css">
-.center { text-align: center; }
-input, button { width: 300px; }
+
+.table { display: table;}
+.cell  { display: table-cell; position: block;
+         vertical-align: middle; text-align: center; }
+
+body
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: url(bg.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+p { line-height: 0; }
+
+.header
+{
+    font-family: sans-serif;
+    font-size: 3em;
+    font-weight: bold;
+    color: black;
+}
+
+.nono
+{
+    color: white;
+}
+
+
+button
+{
+    font-size: 1.5em;
+}
+
         </style>
+        <script type="text/javascript">
+
+// in the future we should be doing this all with ajax, not totally hacky
+// url params
+
+window.onload = function()
+{
+    if (window.location.search != '')
+        window.location.search = ''
+}
+
+        </script>
     </head>
-    <body class="center">
-        <form action='/'>
-            <input method="post" name="url"><br>
-            <button>Rock it</button>
-        </form>
+    <body class="table">
+
+<div class="cell">
+    <p class="header"><span class="nono">nono</span>cast</p>
+    <form action='/'>
+        <p><input method="post" name="url"></p>
+        <p><button>Rock it!</button></p>
+    </form>
+</div>
+
     </body>
 </html>
 '''
@@ -44,22 +96,32 @@ frontend_url_handler = None
 
 class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        params = re.findall('''\?url=(.*);?''', self.path)
+        if self.path == '/bg.jpg':
+            self.send_response(200)
+            self.send_header('content-type', 'image/jpeg')
+            self.end_headers()
+            bg = open('bg.jpg', 'rb')
+            self.wfile.write(bg.read())
+            bg.close()
+            self.wfile.close()
 
-        self.send_response(200)
-        if len(params) > 0:
-            frontend_url_handler(unquote(params[0]))
-        self.send_header('content-type', 'text/html')
-        self.end_headers()
-        self.wfile.write(page)
-        self.wfile.close()
+        else:        
+            params = re.findall('''\?url=(.*);?''', self.path)
+
+            self.send_response(200)
+            if len(params) > 0:
+                frontend_url_handler(unquote(params[0]))
+            self.send_header('content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(page)
+            self.wfile.close()
 
 def run(handler):
     global frontend_url_handler
 
     frontend_url_handler = handler
     server = HTTPServer(
-        ('localhost', 8000),
+        ('', 8000),
         RequestHandler
     )
     while 1:
