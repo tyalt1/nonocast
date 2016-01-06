@@ -1,11 +1,27 @@
+# Copyright 2016 Tyler Alterio
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 from __future__ import print_function
 from sys import version_info
-import re, urllib3
+import re
 
 if version_info[0] == 2:
     from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
+    from urllib2 import unquote
 else:
     from http.server import HTTPServer, BaseHTTPRequestHandler
+    from urllib3 import unquote
 
 page = '''
 <html>
@@ -32,7 +48,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
         self.send_response(200)
         if len(params) > 0:
-            frontend_url_handler(urllib2.unquote(params[0]))
+            frontend_url_handler(unquote(params[0]))
         self.send_header('content-type', 'text/html')
         self.end_headers()
         self.wfile.write(page)
@@ -52,4 +68,5 @@ def run(handler):
 def handle_url(url):
     print(url)
 
-run(handle_url)
+if __name__ == "__main__":
+    run(handle_url)

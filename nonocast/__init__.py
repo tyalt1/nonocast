@@ -13,3 +13,4 @@
 # limitations under the License.
 
 from .streamer_engine import stream
+from .frontend import run as run_server
