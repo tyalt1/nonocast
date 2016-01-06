@@ -1,5 +1,3 @@
-#!/bin/env python
-
 # Copyright 2016 Tyler Alterio
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import print_function
-from nonocast import main
+from streamer_engine import stream
+from frontend import run as run_server
+from multiprocessing import Process, Queue
 
-main()
+q = Queue(64)
+
+def url_listener():
+    while True:
+        url = q.get()
+        stream(url)
+
+def main():
+    frontend = Process(target=run_server, args=[q.put_nowait])
+    backend = Process(target=url_listener)
+    frontend.start()
+    backend.start()
+
+if __name__ == "__main__":
+    main()
