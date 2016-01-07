@@ -12,13 +12,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from os import system
+# see http://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess-launched-with-shell-true
 
-def stream(url, quality='source'):
-    # system("killall vlc")
-    # system("vlc {} &".format(url))
-    system("livestreamer {} {}".format(url, quality))
+import rules
+
+from os import system
+import os
+import time
+import signal
+import subprocess
+
+process = None
+
+def stream(url):
+    global process
+
+    command = rules.get_play_command(url)
+    if command:
+        if process:
+            os.killpg(
+                os.getpgid(process.pid),
+                signal.SIGTERM
+            )
+
+        print('running {}'.format(command))
+        process = subprocess.Popen(
+            command,
+            shell=True,
+            preexec_fn=os.setsid
+        )
+
+    else:
+        print("I don't know how to open that :(")
 
 if __name__ == "__main__":
     from sys import argv
-    stream(argv[1])
+
+    if len(argv) > 1:
+        stream(argv[1])
+    else:
+        print 'usage: ./streamer_engine.py "your_url_here"'
