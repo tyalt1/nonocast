@@ -14,7 +14,7 @@
 
 from os import system
 
-def stream(url, quality='source'):
+def stream(url, quality='best'):
     # system("killall vlc")
     # system("vlc {} &".format(url))
     system("livestreamer {} {}".format(url, quality))

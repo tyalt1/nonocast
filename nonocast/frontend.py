@@ -14,7 +14,7 @@
 
 from __future__ import print_function
 from sys import version_info
-import re
+import re, os
 
 if version_info[0] == 2:
     from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
@@ -95,17 +95,16 @@ window.onload = function()
 frontend_url_handler = None
 
 class RequestHandler(BaseHTTPRequestHandler):
+    background  = os.path.join(os.path.realpath(__file__),'bg.jpg')
     def do_GET(self):
         if self.path == '/bg.jpg':
             self.send_response(200)
             self.send_header('content-type', 'image/jpeg')
             self.end_headers()
-            bg = open('bg.jpg', 'rb')
-            self.wfile.write(bg.read())
-            bg.close()
+            with open(self.background, 'rb') as bg:
+                self.wfile.write(bg.read())
             self.wfile.close()
-
-        else:        
+        else:
             params = re.findall('''\?url=(.*);?''', self.path)
 
             self.send_response(200)
@@ -124,7 +123,7 @@ def run(handler):
         ('', 8000),
         RequestHandler
     )
-    while 1:
+    while True:
         server.handle_request()
 
 def handle_url(url):
