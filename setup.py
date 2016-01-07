@@ -30,6 +30,8 @@ setup(
     packages=['nonocast'],
     install_requires=['livestreamer'],
     license='Apache 2.0',
+    include_package_data=True,
+    package_data={'nonocast' : ['bg.jpg']},
     classifiers=[
         "Development Status :: 1 - Planning",
         "Environment :: Web Environment",
