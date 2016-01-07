@@ -95,7 +95,9 @@ window.onload = function()
 frontend_url_handler = None
 
 class RequestHandler(BaseHTTPRequestHandler):
-    background  = os.path.join(os.path.realpath(__file__),'bg.jpg')
+    folder     = os.path.split(os.path.realpath(__file__))[0]
+    background = os.path.join(folder, 'bg.jpg')
+
     def do_GET(self):
         if self.path == '/bg.jpg':
             self.send_response(200)
