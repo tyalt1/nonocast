@@ -25,6 +25,6 @@ The service is built using the  [Liverstreamer](http://docs.livestreamer.io/) AP
 
 ## License
 
-Copyright (C) 2016 Tyler Alterio
+Copyright (C) 2016 Tyler Alterio, YuetLong Leung, Matthew Wolf, Allison Ober
 
 Distributed under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
