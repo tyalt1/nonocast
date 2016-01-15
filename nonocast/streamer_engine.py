@@ -17,7 +17,7 @@ from os import system
 def stream(url, quality='best'):
     # system("killall vlc")
     # system("vlc {} &".format(url))
-    system("livestreamer {} {}".format(url, quality))
+    system("livestreamer {} {} -np omxplayer".format(url, quality))
 
 if __name__ == "__main__":
     from sys import argv
