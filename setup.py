@@ -25,7 +25,7 @@ setup(
     version='0.0.0',
     description='Web server for universal media casting.',
     long_description=readme,
-    author='Tyler Alterio',
+    author='Tyler Alterio, YuetLong Leung, Matthew Wolf, Allison Ober',
     scripts=['bin/nonocast'],
     packages=['nonocast'],
     install_requires=['livestreamer'],
