@@ -26,7 +26,7 @@ setup(
     description='Web server for universal media casting.',
     long_description=readme,
     author='Tyler Alterio',
-    scripts=['scripts/nonocast'],
+    scripts=['bin/nonocast'],
     packages=['nonocast'],
     install_requires=['livestreamer'],
     license='Apache 2.0',
