@@ -15,9 +15,8 @@
 from streamer_engine import stream
 from frontend import run as run_server
 from multiprocessing import Process, Queue
-from time import sleep
 from signal import *
-import sys
+from sys import exit
 
 q = Queue(64)
 
@@ -27,20 +26,19 @@ def url_listener():
         stream(url)
 
 def cleanup(*args):
-    sys.exit(0)
+    exit(0)
 
 def main():
-    frontend = Process(target=run_server, args=[q.put_nowait])
-    backend = Process(target=url_listener)
-    for p in (frontend, backend):
-        p.daemon = True
-        p.start()
-    pause()
-
-
-if __name__ == "__main__":
     for sig in (SIGABRT, SIGINT, SIGTERM, SIGILL, SIGSEGV):
         signal(sig, cleanup)
+
+    frontend = Process(target=run_server, args=[q.put_nowait])
+    backend = Process(target=url_listener)
+    for proc in (frontend, backend):
+        proc.daemon = True
+        proc.start()
+
+    pause()
+
+if __name__ == "__main__":
     main()
-
-
