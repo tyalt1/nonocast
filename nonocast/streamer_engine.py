@@ -12,6 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .streamer_engine import stream
-from .frontend import run as run_server
-from .main import main
+from os import system
+
+def stream(url, quality='best'):
+    # system("killall vlc")
+    # system("vlc {} &".format(url))
+    system("livestreamer {} {} -np omxplayer".format(url, quality))
+
+if __name__ == "__main__":
+    from sys import argv
+    stream(argv[1])
