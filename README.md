@@ -17,6 +17,24 @@ living room TV. This way videos can be easily
 displayed on the screen, and can be chosen by any
 device on the network.
 
+## Usage
+
+#### To install onto your operating system
+```
+python2 setup.py install
+```
+
+#### To launch the app (which starts the web server)
+```
+python2 ./nonocast/main.py
+```
+
+#### Webpage is hosted on port 8000, simply open up a browser within local network
+```
+assume device ip is 192.168.1.3
+http://192.168.1.3:8000
+```
+
 ### Supported Media
 - YouTube Videos
 - Twitch Live Streams
