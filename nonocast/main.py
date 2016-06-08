@@ -14,7 +14,8 @@
 
 from streamer_engine import stream
 from frontend import run as run_server
-from multiprocessing import Process, Queue
+from multiprocessing import Process
+from vid_queue import VidQueue as Queue
 from signal import *
 from sys import exit
 
